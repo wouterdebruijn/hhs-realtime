@@ -12,22 +12,30 @@
 
 using namespace std;
 void Buffer::zetInBuf(int d) {
-    while (teller == GROOTTE);
+    vol.acquire();
+
     opslag[in++]=d;
     in %=GROOTTE;
     m1.lock();
     teller++;
+    cout<<"teller in  "<<teller<<endl;
     m1.unlock();
+
+    leeg.release();
 }
 
 int Buffer::haalUitBuf() {
     int waarde;
-    while(teller==0);
+    leeg.acquire();
+    
     waarde=opslag[out++];
     out %=GROOTTE;
     m1.lock();
     teller--;
+    cout<<"teller out "<<teller<<endl;
     m1.unlock();
+
+    vol.release();
     return waarde;
 }
 
