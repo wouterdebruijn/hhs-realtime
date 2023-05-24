@@ -17,10 +17,10 @@ using namespace std;
 int main(int argc, const char * argv[]) {
 
     Buffer opslag;
-    Sensor s1(1,10,100000,&opslag); //te genereren data tssen de 1 en de 9 aantal 10
-    Verwerker vw1(&opslag,100000);
+    Sensor s1(1,10,100,&opslag); //te genereren data tssen de 1 en de 9 aantal 10
+    Verwerker vw1(&opslag,100);
     cout<<"start" <<endl;
-    for(int n=0;n<30;n++) {
+    for(int n=0;n<5;n++) {
       thread t1(&Sensor::genereerdData,&s1);
       thread t2(&Verwerker::verwerkData,&vw1);
 

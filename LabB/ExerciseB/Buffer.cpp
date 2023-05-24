@@ -12,29 +12,35 @@
 
 using namespace std;
 void Buffer::zetInBuf(int d) {
+    // Wacht tot we niet meer vol zijn
     vol.acquire();
+
+    cout << "In on i: " << in << " value: " << d << endl;
 
     opslag[in++]=d;
     in %=GROOTTE;
     m1.lock();
     teller++;
-    cout<<"teller in  "<<teller<<endl;
     m1.unlock();
 
+    // Geef aan dat we niet meer leeg zijn
     leeg.release();
 }
 
 int Buffer::haalUitBuf() {
     int waarde;
+    // Wacht tot we niet meer leeg zijn
     leeg.acquire();
-    
+
     waarde=opslag[out++];
+    cout << "Out on i: " << out << " value: " << waarde << endl;
+
     out %=GROOTTE;
     m1.lock();
     teller--;
-    cout<<"teller out "<<teller<<endl;
     m1.unlock();
 
+    // Geef aan dat we niet meer vol zijn
     vol.release();
     return waarde;
 }

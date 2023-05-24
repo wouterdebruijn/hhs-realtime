@@ -22,8 +22,8 @@ public:
     void zetInBuf(int);
     int haalUitBuf();
 private:
-    binary_semaphore vol{GROOTTE-1};
-    binary_semaphore leeg{0};
+    counting_semaphore<GROOTTE> vol{GROOTTE};
+    counting_semaphore<GROOTTE> leeg{0};
     int in=0;
     int out=0;
     int teller=0;
